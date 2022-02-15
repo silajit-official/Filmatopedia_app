@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+
+</head>
+<body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+
+
+  <!-- Modal Login-->
+<div>
+   <div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Enter Credentials to Login</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form action="/login_req/" method="post">{%csrf_token%}
+                  <div class="form-group">
+                     <label for="lusername">Enter Username</label>
+                     <input type="text"  class="form-control" required name="lusername" id="lusername" aria-describedby="emailHelp">
+                     <small id="emailHelp" class="form-text text-muted">We'll never share your username with anyone else.</small>
+                  </div>
+                  <div class="form-group">
+                     <label for="lpassword">Enter Password</label>
+                     <input type="password" class="form-control" required name="lpassword" id="lpassword">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Log In</button>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!--Modal SignUp-->
+<div>
+    <div class="modal fade" id="SignupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel1">Sign Up Details</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form action="/signup/" name="signup" method="post" onsubmit="return signupvalidation()" enctype="multipart/form-data"> {% csrf_token %}
+                  <div class="form-group">
+                     <label for="susername">Choose Username</label>
+                     <input type="text" class="form-control" required name="susername" id="susername" aria-describedby="emailHelp">
+                     <small id="emailHelp1" class="form-text text-muted">We'll never share your username with anyone else.</small>
+                  </div>
+                   <div class="form-group">
+                     <label for="name">Enter Name</label>
+                     <input type="text" class="form-control" required name="name" id="name" aria-describedby="emailHelp">
+                     <small id="emailHelp2" class="form-text text-muted">We'll never share your username with anyone else.</small>
+                  </div>
+
+                     <div class="form-group">
+                     <label for="name">Enter Phone Number</label>
+                     <input type="number" class="form-control" required name="phone" id="phone" aria-describedby="emailHelp">
+                     <small id="emailHlp2" class="form-text text-muted">We'll never share your Phone Number with anyone else.</small>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="spassword">Choose Password</label>
+                     <input type="password" class="form-control" required name="spassword" id="spassword">
+                  </div>
+                   <div class="form-group">
+                     <label for="image">Choose Profile Pic</label>
+                     <input type="file" accept="image/*" name="imggg" required  class="form-control" id="image">
+                       <small id="emailHelp3" class="form-text text-muted">Image must be lower than 2MB</small>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Sign Up</button>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+    <script>
+        function signupvalidation(){
+            var image=document.getElementById("image");
+            var username=document.getElementById("susername").value;
+            var name=document.getElementById("name").value;
+            var password=document.getElementById("spassword").value;
+            var size=parseFloat(image.files[0].size/(1024*1024)).toFixed(2);
+            if(size>2){
+                alert('Image is Greater than 2MB');
+                return false;
+                }
+            else if(password.length<6){
+                alert('Password Should be greater than 6 characters');
+                return false;
+                }
+            else
+                return true;
+        }
+    </script>
+</div>
+
+
+<!--Optional Request suggestion Modal-->
+<div>
+   <div class="modal fade" id="reqModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               {% if param2|length > 0 %}
+                    <h5 class="modal-title" >Post you Request for a film/series.</h5>
+                       {% else %}
+                       <h5 style="color:red" class="modal-title" >You are not in any group</h5>
+                       {% endif%}
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form action="/reqsuggestion/" method="post">{%csrf_token%}
+                    <div class="form-group">
+                      <label for="grp1">Choose a Group:</label>
+                        <select class="form-control" required id="grp1" name="grp1">
+                            {% for i in param2 %}
+                            <option value="{{i.group_name}},{{i.admin_user}}">{{i.group_name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+
+                  <div class="form-group">
+                     <label for="type">Enter Type of Films you want</label>
+                     <input type="text"  class="form-control" required name="type" id="type" aria-describedby="emailHelp">
+                  </div>
+                  <div class="form-group">
+                      <label for="lang">Please select the Language of content:</label>
+                        <select class="form-control" required id="lang" name="lang">
+                            <option value="English">English</option>
+                              <option value="Hindi">Hindi</option>
+                              <option value="Bengali">Bengali</option>
+                        </select>
+                    </div>
+                  <button type="submit" class="btn btn-primary">Post Request</button>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!--Optional Add Member Modal-->
+<div>
+   <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" >Add Member to Group</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form action="/addmember/" method="post">{%csrf_token%}
+                   <div class="form-group">
+                       {% if param|length > 0 %}
+                    <label for="username">Enter Username of the user to be added:</label>
+                       {% else %}
+                       <label style="color:red;" for="username">Only Group Admin can add members</label>
+                       {% endif%}
+                        <input type="text" required class="form-control" id="username" name="username" aria-describedby="emailHelp">
+                        <small id="emailHlp" class="form-text text-muted">The username must be registered</small>
+                      </div>
+                  <div class="form-group">
+                      <label for="lang">Choose a Group to add member</label>
+                        <select class="form-control" required id="grp" name="grp">
+                            {% for i in param %}
+                              <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  <button type="submit" class="btn btn-primary">Add Member</button>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!--Optional Get Suggestion Modal-->
+<div>
+   <div class="modal fade" id="getModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+                {% if param2|length > 0 %}
+                    <h5 class="modal-title" >Enter Details to post Movie Request</h5>
+                       {% else %}
+                       <h5 style="color:red" class="modal-title" >You are not in any group</h5>
+                       {% endif%}
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form action="/getsuggestion/" method="post">{%csrf_token%}
+                    <div class="form-group">
+                      <label for="grp3">Choose a Group:</label>
+                        <select required class="form-control" id="grp3" name="grp3">
+                            {% for i in param2 %}
+                                <option value="{{i.group_name}},{{i.admin_user}}">{{i.group_name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+
+                  <button type="submit" class="btn btn-primary">Get Suggestion</button>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!--Optional Create Grp Modal-->
+<div>
+   <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" >Enter Details to post Movie Request</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form action="/creategroup/" method="post">{%csrf_token%}
+                    <div class="form-group">
+                    <label for="username1">Choose a Group name:</label>
+                        <input type="text" required class="form-control" id="username1" name="grpname" aria-describedby="emailHelp">
+                        <small id="emailHp" class="form-text text-muted">Choose a meaningful Name</small>
+                      </div>
+
+                  <button type="submit" class="btn btn-primary">Create Group</button>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- Navbar-->
+  <div>
+   <nav class="navbar navbar-expand-lg navbar-light" style="background:#342f2f">
+      <a class="navbar-brand" href="/" style="color:white; font-weight:bold;font-size:28px">Filmato<span class="badge badge-secondary">Pedia</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav mr-auto">
+
+            {% if user.is_authenticated and suggestion %}
+                <li class="nav-item ">
+               <a class="nav-link " href="/" style="color:white;font-weight:bold">Home<span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle"  id="navbarDropdown1" role="button" style="color:white;font-weight:bold" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Groups
+               </a>
+               <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                  <a class="dropdown-item" href="" data-toggle="modal" data-target="#createModal">Create a Group</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="" data-toggle="modal" data-target="#addModal">Add member to a Group</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/groups" >See all Group</a>
+               </div>
+            </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/postsuggestion/" style="color:white;font-weight:bold">Post_Suggestion</a>
+                </li>
+                 <li class="nav-item ">
+                    <a class="nav-link" href="" style="color:white;font-weight:bold" data-toggle="modal" data-target="#reqModal">Request_Suggestion</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="" style="color:white;font-weight:bold" data-toggle="modal" data-target="#getModal">Get_Recomendations</a>
+                </li>
+             {% else %}
+              <li class="nav-item active">
+               <a class="nav-link" href="/" style="color:white;font-weight:bold">Home <span class="sr-only">(current)</span></a>
+            </li>
+              <li class="nav-item">
+               <a class="nav-link" href="/about/" style="color:white;font-weight:bold">About</a>
+            </li>
+             {% if user.is_authenticated %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/news/" style="color:white;font-weight:bold">Hot_Filmy_News</a>
+                </li>
+
+             <li class="nav-item">
+                    <a class="nav-link" href="/suggestion/" style="color:white;font-weight:bold">Groups_&_Suggestion</a>
+                </li>
+
+             {% endif %}
+
+             {% if user.is_authenticated %}
+              <li class="nav-item">
+                    <a class="nav-link" href="/profile/" style="color:white;font-weight:bold">Profile</a>
+                </li>
+            {% else %}
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" style="color:white;font-weight:bold" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Super-Heroes
+               </a>
+               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" target="_blank" href="https://www.marvel.com/characters/captain-america-steve-rogers">Captain America</a>
+                  <a class="dropdown-item" target="_blank" href="https://www.marvel.com/characters/iron-man-tony-stark">Iron Man</a>
+                  <a class="dropdown-item" target="_blank" href="https://www.marvel.com/characters/thor-thor-odinson">Thor</a>
+                  <a class="dropdown-item" target="_blank" href="https://www.marvel.com/characters/hulk-bruce-banner">Hulk</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" target="_blank" href="https://www.dccomics.com/characters/batman">Batman</a>
+                  <a class="dropdown-item" target="_blank" href="https://www.dccomics.com/characters/superman">Super Man</a>
+                  <a class="dropdown-item" target="_blank" href="https://www.dccomics.com/characters/aquaman">Aquaman</a>
+               </div>
+            </li>
+             {%endif%}
+
+        {% endif %}
+         </ul>
+
+            {% if user.is_authenticated %}
+          <p class="mr-3 mt-2" style="color:white;font-weight:bold">Welcome To Filmy World-</p><p class="mr-5 mt-2" style="font-style:italic;font-size:25px;color:white;font-weight:bold;"><a href="/profile/"> {{user.username}}</a></p>
+                <button class="btn btn-success" type="button" onclick="window.location.href='/logout_req'">Logout</button>
+            {% else %}
+         <form class="form-inline my-2 my-lg-0" >
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-success" type="submit">Search</button>
+
+         </form>
+          <div class="ml-5">
+               <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#LoginModal">Log IN</button>
+               <button type="button" class="btn btn-outline-danger ml-2" data-toggle="modal" data-target="#SignupModal">Sign UP</button>
+            </div>
+            {% endif %}
+
+      </div>
+   </nav>
+</div>
+        {% block body %}
+        {% endblock %}
+        <footer class="container py-5">
+  <div class="row">
+    <div class="col-12 col-md">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"></circle><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"></path></svg>
+      <small class="d-block mb-3 text-muted">© 2020-2025</small>
+    </div>
+    <div class="col-6 col-md">
+      <h5>Features</h5>
+      <ul class="list-unstyled text-small">
+        <li><a class="text-muted" href="#">Web Scraping</a></li>
+        <li><a class="text-muted" href="#">Film Suggestion</a></li>
+        <li><a class="text-muted" href="#">Movie News</a></li>
+        <li><a class="text-muted" href="#">Cool interface</a></li>
+
+      </ul>
+    </div>
+    <div class="col-6 col-md">
+      <h5>Resources</h5>
+      <ul class="list-unstyled text-small">
+        <li><a class="text-muted" href="#">Python</a></li>
+        <li><a class="text-muted" href="#">Django</a></li>
+        <li><a class="text-muted" href="#">Web Scraping</a></li>
+        <li><a class="text-muted" href="#">Bootstrap</a></li>
+      </ul>
+    </div>
+
+    <div class="col-6 col-md">
+      <h5>About</h5>
+      <ul class="list-unstyled text-small">
+        <li><a class="text-muted" >Creator-SILAJIT SAHA</a></li>
+        <li><a class="text-muted" >Locations-West Bengal, India</a></li>
+        <li><a class="text-muted" >Email-sahasilajit3@gmail.com</a></li>
+        <li><a class="text-muted" >Privacy</a></li>
+        <li><a class="text-muted" >Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+</body>
+</html>

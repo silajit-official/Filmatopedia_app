@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{%block title%}Groups{%endblock%}
+
+{%block body%}
+<!--Jumbotron-->
+<div>
+    <section class="jumbotron text-center">
+    <div class="container">
+      <h1 style="font-weight:bold">Groups you are In</h1>
+      <p class="lead text-muted">There are all the groups that you are currently in. These group may be created by you or you have been added by someone. <below></below></p>
+    </div>
+  </section>
+</div>
+
+<div class="container">
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Serial Number</th>
+      <th scope="col">Group Name</th>
+      <th scope="col">Added By(username)</th>
+      <th scope="col">Date of group creation</th>
+      <th scope="col">Group Info</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in grps %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{i.group.group_name}}</td>
+        {% if request.user == i.group.admin_user.user %}
+        <td>You(creator)</td>
+        {% else %}
+      <td>{{i.group.admin_user}}</td>
+        {% endif %}
+      <td>{{i.group.date|date:"M d,Y"}}</td>
+      <td>
+       <form action="/groupinfo/" method="post"> {% csrf_token %}
+          <button class="btn btn-success" value="{{i.group.admin_user}},{{i.group.group_name}}" name="group" type="submit">Click to View</button>
+        </form>
+      </td>
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+
+</div>
+<div style="margin-bottom:300px">
+
+</div>
+{%endblock%}

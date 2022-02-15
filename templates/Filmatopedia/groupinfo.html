@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{%block title%}Groups{%endblock%}
+
+{%block body%}
+<!--Jumbotron-->
+<div>
+    <section class="jumbotron text-center">
+    <div class="container">
+      <h1 style="font-weight:bold">{{grpname}}</h1>
+      <p class="lead text-muted">The following listed members are the members of this group.<below></below></p>
+    </div>
+  </section>
+</div>
+
+<div class="container">
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Serial Number</th>
+      <th scope="col">Member's Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in grp %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+        {% if i.user.user.username == name %}
+        <td>{{ i.user.name }}(Group Admin)</td>
+        {% else %}
+        <td>{{ i.user.name }}</td>
+        {%endif%}
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+
+</div>
+<div style="margin-bottom:300px">
+
+</div>
+{%endblock%}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Get Movie Suggestion{% endblock %}
+
+{% block body %}
+<!--Upper Info-->
+<div>
+    <section class="jumbotron text-center">
+    <div class="container">
+      <h1 style="font-weight:bold">Group Name: {{name}}</h1>
+      <p class="lead text-muted">All the films suggested here are posted by the registered members of this applications. If any suggestion supports any bad message then report to admin. <below></below></p>
+    </div>
+  </section>
+</div>
+
+
+<center class="mt-5" style="font-weight:bold;font-style:italic"><h1>There Are some Suggestions</h1></center>
+
+
+<!--Featurettes-->
+<div class="container">
+    <!--Featurates-->
+<div class="container my-2">
+    <hr class="featurette-divider">
+    {% for i,j in value %}
+        {% if i.req %}
+             <h2 class="my-5"><span class="text-muted tab my-5" style="font-weight:bold;font-style:italic">***{{i.user.name}} has Requested a {{j.type}} movie on {{j.language}} on:   {{j.date|date:"M d,Y"}}***</span></h2>
+        {% else %}
+    <div class="row featurette my-5" style="border:0.5px solid #e0d5d5">
+      <div class="col-md-7">
+        <h3 class="featurette-heading" style="font-weight:bold">Posted By: <span class="text-muted" style="font-weight:bold">{{i.user.name}}</span></h3>
+        <h5 class="lead mt-3" style="font-weight:bold">Title: <span class="text-muted">{{ i.title}}</span></h5>
+        <h5 class="lead" style="font-weight:bold">Language: <span class="text-muted">{{i.language}}</span></h5>
+        <h5 class="lead" style="font-weight:bold">Type: <span class="text-muted">{{i.type}}</span></h5>
+        <h5 class="lead" style="font-weight:bold">Posted On: <span class="text-muted">{{ i.date|date:"M d, Y" }}</span></h5>
+      </div>
+      <div class="col-md-5">
+        <img class="container-fluid no-padding"  src="/media/{{i.user.profile_pic}}">
+      </div>
+    </div>
+        {% endif %}
+
+
+    {% if j.req %}
+    <h2 class="my-5"><span class="text-muted tab my-5" style="font-weight:bold;font-style:italic">***{{j.user.name}} has Requested a {{j.type}} movie on {{j.language}} on:   {{j.date|date:"M d,Y"}}***</span></h2>
+
+    {% else %}
+    <div class="row featurette my-5" style="border:0.5px solid #e0d5d5">
+      <div class="col-md-7 order-md-2">
+        <h3 class="featurette-heading" style="font-weight:bold">Posted By: <span class="text-muted" style="font-weight:bold">{{j.user.name}}</span></h3>
+        <h5 class="lead mt-3" style="font-weight:bold">Title:<span class="text-muted">{{j.title}}</span></h5>
+        <h5 class="lead" style="font-weight:bold">Language: <span class="text-muted">{{j.language}}</span></h5>
+        <h5 class="lead" style="font-weight:bold">Type: <span class="text-muted">{{j.type}}</span></h5>
+        <h5 class="lead" style="font-weight:bold">Posted On: <span class="text-muted">{{ j.date|date:"M d, Y" }}</span></h5>
+      </div>
+      <div class="col-md-5">
+        <img class="container-fluid no-padding"  src="/media/{{j.user.profile_pic}}">
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    {% if odd %}
+        {% if temp.req %}
+    <h2 class="my-5"><span class="text-muted tab my-5" style="font-weight:bold;font-style:italic">***{{temp.user.name}} has Requested a {{temp.type}} movie in {{temp.language}} on:   {{temp.date|date:"M d,Y"}}***</span></h2>
+
+    {% else %}
+    <div class="row featurette my-5" style="border:0.5px solid #e0d5d5">
+      <div class="col-md-7 order-md-2">
+        <h3 class="featurette-heading" style="font-weight:bold">Posted By: <span class="text-muted" style="font-weight:bold">{{temp.user.name}}</span></h3>
+        <h5 class="lead mt-3" style="font-weight:bold">Title:     <span class="text-muted">{{  temp.title}}</span></h5>
+        <h5 class="lead" style="font-weight:bold">Language: <span class="text-muted">{{temp.language}}</span></h5>
+        <h5 class="lead" style="font-weight:bold">Type: <span class="text-muted">{{temp.type}}</span></h5>
+        <h5 class="lead" style="font-weight:bold">Posted On: <span class="text-muted">{{ temp.date|date:"M d, Y" }}</span></h5>
+      </div>
+      <div class="col-md-5">
+        <img class="container-fluid no-padding"  src="/media/{{temp.user.profile_pic}}">
+      </div>
+    </div>
+    {% endif %}
+    {%endif%}
+
+</div>
+</div>
+
+{% endblock %}

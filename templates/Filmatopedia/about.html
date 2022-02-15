@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %}About App {% endblock %}
+
+{% block body %}
+{% load static %}
+
+
+<!--Carousel-->
+<div>
+   <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" >
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+
+  </ol>
+  <div class="carousel-inner">
+
+    <div class="carousel-item active">
+      <img src="{% static 'images/about.jpg' %}" class="d-block w-100" alt="...">
+
+    </div>
+  </div>
+</div>
+</div>
+
+
+<center><h1 class="mt-5">Fiew Features of <span class="badge badge-danger">FilmatoPedia</span></h1></center>
+
+<!--Featurates-->
+<div class="container mt-2">
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">Web Scraping<span class="text-muted">- Latest news from here</span></h2>
+      <p class="lead">Web Scraping means pulling data from a Dynamic web page. In this Application I have used a section which will allow you to read lates and hot news of hollywood movies from this app, it does not use links to redirect you to the page, it Scrape information from the website and pull those datas and pictures and display those in this Applications</p>
+      </div>
+      <div class="col-md-5">
+        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src="https://res.cloudinary.com/dyd911kmh/image/upload/f_auto,q_auto:best/v1587503051/web1_jpfixv.png">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Movie Suggestion <span class="text-muted">Suggest and get Suggested</span></h2>
+      <p class="lead">This Feature of the App allows you to post a Movie Suggestion request and based on that your friend, who already register in my Application, can suggest you any Movie or Web Series. You can also make any suggestion of any films or Series for your friend. Most importantly this suggestion will be public, as all the people who are register in my Application can view the request as well as the suggestion.</p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src="https://beautifulpixels.com/wp-content/uploads/2017/06/popcorn-watch-movies-2.png">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+      <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">Creating Groups<span class="text-muted">- Share movies with your Friends</span></h2>
+      <p class="lead">This applications provides you a special features to privatised you posting and requesting suggestion in the app, as you can create groups among your friends and post, request and see their suggesting films. All the suggestion amongs each group is privatised, no group can see any other's group's suggestion or requested data.</p>
+      </div>
+      <div class="col-md-5">
+        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src="https://2.bp.blogspot.com/-FnmuJsE87JY/UPX6fSZT2iI/AAAAAAAAAFM/rEp5tWz4Jcs/s1600/social-media-strategy-groups.jpg">
+      </div>
+    </div>
+
+        <hr class="featurette-divider">
+
+
+
+      <div class="row featurette">
+      <div class="col-md-7  order-md-2">
+        <h2 class="featurette-heading">Customize your Account<span class="text-muted">- You can edit your account any time</span></h2>
+      <p class="lead">The application provides you a handy interface to change User name,password,Phone Numbers and also their profile pictures any time they want, just with some few clicks. But the profile picture's size must be less that 2MB</p>
+      </div>
+      <div class="col-md-5">
+        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src="https://data.apksum.com/da/com.ceyhan.sets/2.5/icon.png">
+      </div>
+    </div>
+
+        <hr class="featurette-divider">
+
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">Handy Interface<span class="text-muted">- Everything with some few clicks.</span></h2>
+      <p class="lead">The Application is made with the fact keep in mind that it can be used by anyone, from an gadget expert to a begginers in computers. Every thing can be achieved with some few cicks. First the user have to register in the system and then after log in the user can utilise all the facilites of the app like get suggestion of movies, suggest a movie to a friend and get latest and hot Films industries news. </p>
+      </div>
+      <div class="col-md-5">
+<img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src="https://s27389.pcdn.co/wp-content/uploads/2017/05/AdobeStock_75164586-1024x683.jpeg">      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+
+     </div>
+
+{% endblock %}
